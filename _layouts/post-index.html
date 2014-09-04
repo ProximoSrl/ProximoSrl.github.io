@@ -5,6 +5,9 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en"><!--<![endif]-->
 <head>
 {% include head.html %}
+<style>
+  h3{ color:white;}
+</style>
 </head>
 
 <body id="post-index" {% if page.image.feature %}class="feature"{% endif %}>
@@ -22,6 +25,7 @@
   <div class="header-title">
     <div class="header-title-wrap">
       <h1>{{ site.title }}</h1>
+      <h3>{{ site.description }}</h3>
       <h2>{{ page.title }}</h2>
     </div><!-- /.header-title-wrap -->
   </div><!-- /.header-title -->
@@ -37,7 +41,7 @@
   </footer>
 </div><!-- /.footer-wrapper -->
 
-{% include scripts.html %}          
+{% include scripts.html %}
 
 </body>
 </html>
