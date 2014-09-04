@@ -42,6 +42,48 @@ links:
     url: http://prxm.it
     external: true
 
+# Authors
+authors:
+  - andreabalducci
+  - gianmariaricci
+
+authors_data:
+  andreabalducci:
+    name:           Andrea Balducci
+    avatar:         avatar.jpg
+    bio:            "still learning..."
+    email:          mtb.snowboard@gmail.com
+    # Social networking links used in footer. Update and remove as you like.
+    twitter:        andreabalducci
+    facebook:
+    github:         andreabalducci
+    stackexchange:
+    linkedin:
+    instagram:
+    flickr:
+    tumblr:
+    # For Google Authorship https://plus.google.com/authorship
+    # google plus id, include the '+', eg +mmistakes
+    google_plus:    +AndreaBalducci
+  gianmariaricci:
+    name:           Gian Maria Ricci
+    avatar:         avatar.jpg
+    bio:            "ALK"
+    email:
+    # Social networking links used in footer. Update and remove as you like.
+    twitter:
+    facebook:
+    github:
+    stackexchange:
+    linkedin:
+    instagram:
+    flickr:
+    tumblr:
+    # For Google Authorship https://plus.google.com/authorship
+    # google plus id, include the '+', eg +mmistakes
+    google_plus:
+
+
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:    Europe/Rome
 future:      true
@@ -52,7 +94,7 @@ markdown:    kramdown
 permalink:   /:categories/:title/
 
 # Amount of post to show on home page
-paginate: 5
+paginate: 3
 
 kramdown:
   auto_ids: true
