@@ -68,21 +68,21 @@ authors_data:
     google_plus:    +AndreaBalducci
   gianmariaricci:
     name:           Gian Maria Ricci
-    avatar:         avatar.jpg
+    avatar:         RicciGmProfilePhoto.jpg
     bio:            "ALK"
-    email:
+    email:          alkampfer@nablasoft.com
     # Social networking links used in footer. Update and remove as you like.
-    twitter:
+    twitter:        alkampfer
     facebook:
-    github:
+    github:			alkampfergit
     stackexchange:
-    linkedin:
+    linkedin:		
     instagram:
     flickr:
     tumblr:
     # For Google Authorship https://plus.google.com/authorship
     # google plus id, include the '+', eg +mmistakes
-    google_plus:
+    google_plus:    +GianMariaRicci
 
 
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones

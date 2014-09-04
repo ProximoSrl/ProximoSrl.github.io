@@ -9,4 +9,4 @@ image:
   creditlink: http://www.dargadgetz.com/ios-7-abstract-wallpaper-pack-for-iphone-5-and-ipod-touch-retina/
 share: true
 ---
-Content here please!
+This is the page for Ricci Gian Maria!
