@@ -61,6 +61,8 @@ module Jekyll
 end
 {% endhighlight %}
 
+This is CSharp code.
+
 {% highlight csharp %}
  public static void Main() 
     {
