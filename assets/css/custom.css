@@ -1,0 +1,10 @@
+ul.bio-menu{
+  background-color: black;
+  color:white;
+  list-style:none;
+  padding:8px;
+}
+
+ul.bio-menu a{
+  color:white;
+}
