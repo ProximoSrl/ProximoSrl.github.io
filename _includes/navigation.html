@@ -15,7 +15,7 @@
 								<h4>{{ author.name }}</h4>
 								<p>{{ author.bio }}</p>
 							</li>
-							<li><a href="{{ site.url }}/about/">Learn More</a></li>
+							<li><a href="{{ site.url }}/about/{{ author_id }}">Learn More</a></li>
 							{% if author.email %}<li>
 								<a href="mailto:{{ author.email }}"><i class="fa fa-envelope"></i> Email</a>
 							</li>{% endif %}
@@ -47,8 +47,6 @@
 								<a href="http://{{ author.tumblr }}.tumblr.com"><i class="fa fa-tumblr"></i> Tumblr</a>
 							</li>{% endif %}
 						</ul><!-- /.dl-submenu -->
-
-
 					</li>
 					{% endfor %}
 				</ul>
