@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Coming soon
+title: Wish we could say more
 description: "talking about JARVIS and this blog"
 tags: [misc, jarvis, eventsourcing, cqrs]
 author: andreabalducci
@@ -12,5 +12,3 @@ comments: false
 share: true
 ---
 # 09.09.2014
-
-## "Wish we could say more"
