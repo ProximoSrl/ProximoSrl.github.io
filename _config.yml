@@ -37,12 +37,13 @@ bing_verify:
 
 # Links to include in top navigation
 # For external links add external: true
-links:
-  - title: Work
+x_links:
+  - title: work
     url: http://prxm.it
     external: true
 
 # Authors
+default_author: andreabalducci
 authors:
   - andreabalducci
   - gianmariaricci

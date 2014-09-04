@@ -7,6 +7,7 @@ image:
   background: triangular.png
 comments: true
 share: true
+author: gianmariaricci
 ---
 
 Here be a sample post with a custom background image. To utilize this "feature" just add the following YAML to a post's front matter.
