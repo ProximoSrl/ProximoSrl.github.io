@@ -5,7 +5,7 @@ title: Andrea Balducci
 tags: [misc]
 image:
   feature: about-andrea.jpg
-  credit: andreabalducci
+  credit: Sara Balducci
   creditlink: https://flic.kr/p/5sgYeA
 share: true
 ---
