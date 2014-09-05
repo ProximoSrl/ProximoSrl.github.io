@@ -47,16 +47,19 @@ share: true
       <a href="http://{{ author.tumblr }}.tumblr.com"><i class="fa fa-tumblr"></i> Tumblr</a>
     </li>{% endif %}
   </ul><!-- /.submenu -->
-  <div>
+  <div class="bio-text">
     <p>
     Software developer since the end of the eighties and still learning something new every single day... <strong>what else?</strong>
     </p>
     <p>
-    Co-founder and staff member of @<strong>dotnet</strong>marche, @<strong>xpug</strong>marche, @<strong>dev</strong>marche. <br/>
-    As you might have guessed, I live <a href="http://www.turismo.marche.it" target="_blank">here</a>
+    Co-founder and staff member of
+    <a href="https://twitter.com/dotnetmarche">@<strong>dotnet</strong>marche</a>,
+    <a href="https://twitter.com/xpugmarche">@<strong>xpug</strong>marche</a> &amp;
+    <a href="https://twitter.com/devmarche">@<strong>dev</strong>marche</a>.&nbsp;&nbsp;&nbsp;
+    (...yes as you might have guessed, I live <a href="http://www.turismo.marche.it" target="_blank">here</a>)
     </p>
     <p>
-    Wasting my free time as developers conference [ organizer | speaker ], riding my mtb, snowboarding and taking pictures... powered by classic rock!
+    Wasting my free time [ organizing | speaking at | hanging around at ] developer conferences, riding my mtb, snowboarding and taking pictures with my Nikon & my smartphone... powered by classic rock!
     </p>
   </div>
 </div>
