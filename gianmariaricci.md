@@ -8,7 +8,7 @@ image:
   credit: Bruno Leonangeli
 share: true
 ---
-{% assign author = site.authors_data['andreabalducci'] %}
+{% assign author = site.authors_data['gianmariaricci'] %}
 <h2>About me</h2>
 <div class="entry">
   <ul class="bio-menu pull-right">
