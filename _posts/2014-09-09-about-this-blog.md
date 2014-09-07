@@ -2,7 +2,7 @@
 layout: post
 title: About this blog
 description: "talking about JARVIS and this blog"
-tags: [misc, jarvis, eventsourcing, cqrs]
+tags: [misc, jarvis, ddd, cqrs, eventsourcing]
 author: andreabalducci
 image:
   feature: i-m-brave.jpg
@@ -12,7 +12,7 @@ comments: true
 share: true
 ---
 ### Intro
-This blog is about a journey we want to share: we are building a new software product, learning day by day something new from our users, from our mistakes, from our collegues and our friends.
+This blog is about a journey we want to share: we are building a new software product, learning day by day something new from our users, from our mistakes, from our friends.
 
 ### Why? (Quid pro quo)
 No this blog is not a marketing effort, it's a giveback to the dev community; a giveback we hope can improve our learning journey through your feedback and maybe prevent you a headache for the same mistakes we made.
@@ -41,7 +41,8 @@ I failed twice at blogging, this is my 3rd try and the first one in English (wel
 
 I asked a close friend in the dev community to join us for the next months, we have a new customer and we need to scale up to 30x in terms of data and 4x in terms of active users (and a lot of new interesting stuff).
 
-Let me welcome [Gian Maria](/about/gianmariaricci/).
+Let me welcome on board [Gian Maria](/about/gianmariaricci/).
+
 ALK INTRO
 
 
@@ -50,16 +51,18 @@ Me and Gian Maria we'll keep this blog up to date with our journey, and we hope 
 Yes, we are looking at you [Stefano](https://twitter.com/ste8) and  [Alessandro](https://twitter.com/A_Giorgetti).
 
 ### Thanks to
-- [Mauro Servienti](https://twitter.com/mauroservienti) (inadvertently gave me the idea for the product name on our trip to [Frasassi caves](http://www.frasassi.com/)),
-- [Andrea Saltarello](https://twitter.com/andysal74),
-- [Alberto Brandolini](https://twitter.com/ziobrando),
-- [Alessandro Melchiori](https://twitter.com/amelchiori),
-- [Alessandro Giorgetti](https://twitter.com/A_Giorgetti).
+- [Mauro Servienti](https://twitter.com/mauroservienti): inadvertently gave me the idea for the product name on our trip to [Frasassi caves](http://www.frasassi.com/);
+- [Stefano Ottaviani](https://twitter.com/ste8): for choosing this project for his [graduation thesis](http://blogs.ugidotnet.org/ste8/archive/2014/03/03/pubblicazione-della-tesina-su-ddd-e-cqrs.aspx);
+- [Andrea Saltarello](https://twitter.com/andysal74): Ubiquitous language, Ubiquitous language, Ubiquitous language!;
+- [Alberto Brandolini](https://twitter.com/ziobrando): for giving us Evenstorming;
+- [Alessandro Melchiori](https://twitter.com/amelchiori): the first talk about CQRS I've attended (as a powerpoint assistant.. "next slide please")... you owe me a beer;
+- [Alessandro Giorgetti](https://twitter.com/A_Giorgetti): "DDD can't work! Angular? no, ko is fine". Now he's mastering DDD & AngularJs in the healtcare.
 
-Our chats about aggregates, process managers, ubiquitous language, eventstorming, and Domain Driven Design are the building blocks of this journey.
+Our chats about aggregates, process managers, ubiquitous language, eventstorming, CQRS and Domain Driven Design are the building blocks of this journey.
 
 A special mention goes to [Rinat Abdullin](https://twitter.com/abdullin) for inspiring this blog with his [Happypancake post](http://abdullin.com/long/happypancake/).
 
-<strong>Curious?</strong> Feel free to ask for insights in the comments, our blog backlog is waiting for your questions.
+<strong>Curious? Suggestions?</strong> we are waiting your feedback and we have room in our blog backlog.
+
 
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
