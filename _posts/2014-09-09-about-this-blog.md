@@ -43,8 +43,11 @@ I asked a close friend in the dev community to join us for the next months, we h
 
 Let me welcome on board [Gian Maria](/about/gianmariaricci/).
 
-ALK INTRO
+My Name is Gian Maria, I'm an independent consultant on .NET technologies, ALM and Microsoft Team Foundation Server and I'm passionate about everything about developing. 
 
+I have a huge interest about DDD and modern software architectures and I was really amazed about the product Andrea built in really short time with its company, so when he start needing help I was really exited to jump in it. The best part of starting collaborating in this project is probably the idea of publish everything online to share \[ code \| opinions \| comments \| everything \] with DDD community. 
+
+In the end.... I'm really exited and I hope this will reflects in my blog posts, stay tuned.
 
 ### Wrap-up
 Me and Gian Maria we'll keep this blog up to date with our journey, and we hope to have guest posts from our friends sharing a similar path (and some code) on other projects.
