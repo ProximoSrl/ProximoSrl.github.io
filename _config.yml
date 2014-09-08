@@ -1,9 +1,10 @@
-title:            IEnumerable
-subtitle:         Trying to build [ awesome | not so crappy ] stuff
-description:      Talking about software, CQRS & EventSourcing building Jarvis 
+title:            IEnumerable&lt;DevStory&gt;
+subtitle:         Building [ awesome | not so crappy ] stuff
+description:      Talking about software, CQRS & EventSourcing building Jarvis
 disqus_shortname: ienumerable
 reading_time:     true
 words_per_minute: 200
+future          : false
 #Your site's domain goes here. Leave localhost server or blank when working locally.
 url:              http://www.ienumerable.it
 #url:              http://localhost:4000
@@ -33,9 +34,9 @@ background:
 
 # Analytics and webmaster tools stuff goes here
 google_analytics: UA-365151-3
-google_verify:
+google_verify:    7WUOz5_PPWraqh7Yv_Lwo5mxZehETKAOzdIW7-3I4V8
 # https://ssl.bing.com/webmaster/configure/verify/ownership Option 2 content= goes here
-bing_verify:
+bing_verify:      308C7A3A1754628982741035E6BDDA0A
 
 # Links to include in top navigation
 # For external links add external: true
