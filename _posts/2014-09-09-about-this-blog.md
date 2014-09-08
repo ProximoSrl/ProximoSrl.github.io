@@ -14,17 +14,17 @@ share: true
 ### Intro
 This blog is about a journey we want to share: we are building a new software product, learning day by day something new from our users, from our mistakes, from our friends.
 
-### Why? (Quid pro quo)
+### Why we are doing this? (Quid pro quo)
 No this blog is not a marketing effort, it's a giveback to the dev community; a giveback we hope can improve our learning journey through your feedback and maybe prevent you a headache for the same mistakes we made.
 
 <blockquote class="twitter-tweet" ><p>Learn in the open. Have no shame to publish your code and ask questions and go after it.</p>&mdash; Kelly Sommers (@kellabyte) <a href="https://twitter.com/kellabyte/status/504105483569860608">August 26, 2014</a></blockquote>
 
 ok.. show me the code.
 
-### What
+### What you will find on this blog?
 We plan to publish all the code with you (yes, the whole product.. not just code snippets) in 6-9 months when we hope to reach a full featured 1.0 release and have 500+ active paying users.
 
-We'll share more about the product and the current stack (AngularJS, .Net, NEventstore, CQRS / ES / DDD, MongoDB, Elasticsearch) in the next weeks.
+We'll share more about the product (domain insights), tradeoffs and our current dev stack (AngularJS, .Net, NEventstore, CQRS / ES / DDD, MongoDB, Elasticsearch) in the next weeks.
 
 So.. No code? No party! Hold on... [software development is a learning process, working code is a side effetc](http://www.slideshare.net/ziobrando/model-storming)
 
@@ -34,8 +34,8 @@ That's the point, we started this journey one year ago and we are pretty happy w
 
 We want to share what we have learned so far and what we'll learning in the next months (and yes.. some code too).
 
-### Who
-My name is Andrea [Andrea](/about/andreabalducci/), I run a small (4 devs) software house in Italy, in a place so beautiful to stop me from relocating abroad, and I'm very active in the local dev communities.
+### Who we are
+My name is [Andrea](/about/andreabalducci/), I run a small (4 devs) software house in Italy, in a place so beautiful to stop me from relocating abroad, and I'm very active in the local dev communities.
 
 I failed twice at blogging, this is my 3rd try and the first one in English (well beyond my comfort zone).
 
@@ -43,9 +43,9 @@ I asked a close friend in the dev community to join us for the next months, we h
 
 Let me welcome on board [Gian Maria](/about/gianmariaricci/).
 
-My Name is Gian Maria, I'm an independent consultant on .NET technologies, ALM and Microsoft Team Foundation Server and I'm passionate about everything about developing. 
+My Name is Gian Maria, I'm an independent consultant on .NET technologies, ALM and Microsoft Team Foundation Server and I'm passionate about everything about developing.
 
-I have a huge interest about DDD and modern software architectures and I was really amazed about the product Andrea built in really short time with its company, so when he start needing help I was really exited to jump in it. The best part of starting collaborating in this project is probably the idea of publish everything online to share \[ code \| opinions \| comments \| everything \] with DDD community. 
+I have a huge interest about DDD and modern software architectures and I was really amazed about the product Andrea built in really short time with its company, so when he start needing help I was really excited to jump in it. The best part of starting collaborating in this project is probably the idea of publish everything online to share \[ code \| opinions \| comments \| everything \] with DDD community.
 
 In the end.... I'm really exited and I hope this will reflects in my blog posts, stay tuned.
 
@@ -53,17 +53,19 @@ In the end.... I'm really exited and I hope this will reflects in my blog posts,
 Me and Gian Maria we'll keep this blog up to date with our journey, and we hope to have guest posts from our friends sharing a similar path (and some code) on other projects.
 Yes, we are looking at you [Stefano](https://twitter.com/ste8) and  [Alessandro](https://twitter.com/A_Giorgetti).
 
-### Thanks to
+### Thank you guys
+This journey wouldn't be possible without:
+
 - [Mauro Servienti](https://twitter.com/mauroservienti): inadvertently gave me the idea for the product name on our trip to [Frasassi caves](http://www.frasassi.com/);
 - [Stefano Ottaviani](https://twitter.com/ste8): for choosing this project for his [graduation thesis](http://blogs.ugidotnet.org/ste8/archive/2014/03/03/pubblicazione-della-tesina-su-ddd-e-cqrs.aspx);
 - [Andrea Saltarello](https://twitter.com/andysal74): Ubiquitous language, Ubiquitous language, Ubiquitous language!;
-- [Alberto Brandolini](https://twitter.com/ziobrando): for introducing us to Evenstorming in the early stages and for sharing a [talk](http://www.slideshare.net/ziobrando/idea-postit-test-verdi) inspired by a subdomain of this project;
+- [Alberto Brandolini](https://twitter.com/ziobrando): for introducing us to [Evenstorming](http://ziobrando.blogspot.it/2013/11/introducing-event-storming.html) in the early stages and for sharing a [talk](http://www.slideshare.net/ziobrando/idea-postit-test-verdi) inspired by a subdomain of this project;
 - [Alessandro Melchiori](https://twitter.com/amelchiori): the first talk about CQRS I've attended (as a powerpoint assistant.. "next slide please")... you owe me a beer;
-- [Alessandro Giorgetti](https://twitter.com/A_Giorgetti): "DDD can't work! Angular? no, ko is fine". Now he's mastering DDD & AngularJs in the healthcare.
+- [Alessandro Giorgetti](https://twitter.com/A_Giorgetti): "DDD can't work! [Angular](https://angularjs.org/)? No, [KnockoutJS](http://knockoutjs.com/) is fine". Now he's mastering DDD & AngularJs in the healthcare.
 
 Our chats about aggregates, process managers, ubiquitous language, eventstorming, CQRS and Domain Driven Design are the building blocks of this journey.
 
-A special mention goes to [Rinat Abdullin](https://twitter.com/abdullin) for inspiring this blog with his [Happypancake post](http://abdullin.com/long/happypancake/).
+A special mention goes to [Rinat Abdullin](https://twitter.com/abdullin) for inspiring this blog with his [HappyPancake post](http://abdullin.com/long/happypancake/).
 
 <strong>Curious? Suggestions?</strong> we are waiting your feedback and we have room in our blog backlog.
 

@@ -5,9 +5,9 @@ description: "talking about JARVIS and this blog"
 tags: [misc, jarvis, eventsourcing, cqrs]
 author: andreabalducci
 image:
-  feature: i-m-brave.jpg
-  credit: Steven Depolo
-  creditlink: https://flic.kr/p/7RumUx
+  feature: speaker.jpg
+  credit: Tim Geers
+  creditlink: https://flic.kr/p/7XqtJP
 comments: false
 share: true
 ---
