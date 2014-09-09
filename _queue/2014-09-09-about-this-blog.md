@@ -15,7 +15,7 @@ share: true
 This blog is about a journey we want to share: we are building a new software product, learning day by day something new from our users, from our mistakes, from our friends.
 
 ### Why we are doing this? (Quid pro quo)
-No this blog is not a marketing effort, it's a giveback to the dev community; a giveback we hope can improve our learning journey through your feedback and maybe prevent you a headache for the same mistakes we made.
+No this blog is not a marketing effort, it's a giveback to the dev community; a giveback we hope can improve our learning journey through your feedback and maybe avoid you a headache for the same mistakes we made.
 
 <blockquote class="twitter-tweet" ><p>Learn in the open. Have no shame to publish your code and ask questions and go after it.</p>&mdash; Kelly Sommers (@kellabyte) <a href="https://twitter.com/kellabyte/status/504105483569860608">August 26, 2014</a></blockquote>
 
@@ -35,11 +35,11 @@ That's the point, we started this journey one year ago and we are pretty happy w
 We want to share what we have learned so far and what we'll learning in the next months (and yes.. some code too).
 
 ### Who we are
-My name is [Andrea](/about/andreabalducci/), I run a small (4 devs) software house in Italy, in a place so beautiful to stop me from relocating abroad, and I'm very active in the local dev communities.
+My name is [Andrea](/about/andreabalducci/), I run a small (4 devs) software house in Italy and I'm very active in the local dev communities.
 
 I failed twice at blogging, this is my 3rd try and the first one in English (well beyond my comfort zone).
 
-I asked a close friend in the dev community to join us for the next months, we have a new customer and we need to scale up to 100x in terms of data and 4x in terms of active users (and a backlog with a lot of new interesting stuff).
+I asked a close friend in the dev community to join us for the next months, we have a new customer and we need to scale up to 100x in terms of data, 4x in terms of active users and a backlog with a lot of new interesting stuff.
 
 Let me welcome on board [Gian Maria](/about/gianmariaricci/).
 
