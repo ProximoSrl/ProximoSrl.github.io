@@ -12,16 +12,21 @@ comments: true
 share: true
 ---
 
+## File > New > Intranet
+
 One year ago we started an "Intranet 2.0" project for a small bank.
 
-## In the beginning there was Chaos
+
+The project main goal was to improve the ease of access to key informations, avoid personal (and maybe) out of sync document folders, with user's own taxonomy, on user's desktop.
+
 <blockquote>
+In the beginning there was Chaos,<br/>
 And within this Chaos was Power,<br/>
 Great Power without Form
 </blockquote>
 
-The project main goal was to improve the ease of access to key informations and
-avoid custom (out of sync) document folders, with user's own taxonomy, on user's desktop.
+No more phone calls to find "that document" or endless filesystem browsing in search of relevant infos.
+
 
 So our first domain was a [DMS](http://en.wikipedia.org/wiki/Document_management_system).
 
