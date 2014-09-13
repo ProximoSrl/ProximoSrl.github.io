@@ -14,10 +14,15 @@ share: true
 
 ## File > New > Intranet
 
-One year ago we started an "Intranet 2.0" project for a small bank.
+This is the first step of this [journey](/about-this-blog/), we want to tell you what we have built so far.
 
+### One year ago we started an "Intranet 2.0" project for a small bank.
 
-The project main goal was to improve the ease of access to key informations, avoid personal (and maybe) out of sync document folders, with user's own taxonomy, on user's desktop.
+The project main goal was to improve the ease of access to key informations, avoid personal (and sometimes) out of sync document folders, on user's desktop.
+
+We found a ["Yahoo Directory"](https://dir.yahoo.com) of about 4.000+ relevant documents (250.000+ pages).
+
+To simplify document retrieval, every office developed a custom taxonomy to catalog corporate documents.
 
 <blockquote>
 In the beginning there was Chaos,<br/>
@@ -25,8 +30,9 @@ And within this Chaos was Power,<br/>
 Great Power without Form
 </blockquote>
 
-No more phone calls to find "that document" or endless filesystem browsing in search of relevant infos.
+Forgive Google and try to search the internet browsing the ["Yahoo Directory"](https://dir.yahoo.com).. you got it!
 
+Our first goal was: no more phone calls to "knowledge owners" to find "that document" or endless filesystem style browsing in search of relevant informations.
 
 So our first domain was a [DMS](http://en.wikipedia.org/wiki/Document_management_system).
 
@@ -35,7 +41,7 @@ So our first domain was a [DMS](http://en.wikipedia.org/wiki/Document_management
   <figcaption><a href="https://flic.kr/p/dTctCx" title="library by kiarras, on Flickr">library by kiarras, on Flickr</a>.</figcaption>
 </figure>
 
-Others followed pretty soon:
+Then we moved on:
 
 * Support Ticketing with Knowledge Base,
 * Corporate address book,
@@ -45,9 +51,12 @@ Others followed pretty soon:
 * Corporate bookmarks,
 * Corporate chat & file exchange,
 * Active Directory sync,
+* Organisation chart,
+* IT asset inventory,
 * Analytics.
 
 Some domains have been implemented with [CQRS](http://martinfowler.com/bliki/CQRS.html)+[ES](http://martinfowler.com/eaaDev/EventSourcing.html), others with CRUD.
-In the next intro post I'll talk about the current architecture and dev stack.
+
+Next post I'll cover the current architecture and our dev stack.
 
 Stay tuned!
