@@ -30,7 +30,7 @@ And within this Chaos was Power,<br/>
 Great Power without Form
 </blockquote>
 
-Forgive Google and try to search the internet browsing the ["Yahoo Directory"](https://dir.yahoo.com).. you got it!
+Forget Google and try to search the internet browsing the ["Yahoo Directory"](https://dir.yahoo.com).. you got it!
 
 Our first goal was: no more phone calls to "knowledge owners" to find "that document" or endless filesystem style browsing in search of relevant informations.
 
