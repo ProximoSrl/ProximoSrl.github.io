@@ -18,7 +18,7 @@ This is the first step of this [journey](/about-this-blog/), we want to tell you
 
 ### One year ago we started an "Intranet 2.0" project for a small bank.
 
-The project main goal was to improve the ease of access to key informations, avoid personal (and sometimes) out of sync document folders, on user's desktop.
+The project main goal was to improve the ease of access to key informations, avoid personal (and sometimes out of sync) document folders, on user's desktop.
 
 We found a ["Yahoo Directory"](https://dir.yahoo.com) of about 4.000+ relevant documents (250.000+ pages).
 
