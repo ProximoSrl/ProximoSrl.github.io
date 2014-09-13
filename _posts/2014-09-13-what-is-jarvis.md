@@ -4,6 +4,7 @@ title: What is Jarvis?
 description: "The product we are building right now"
 tags: [jarvis, domain, intro]
 author: andreabalducci
+modified: 2014-09-14
 image:
   feature: knowledge-channel.jpg
   credit: Jon Mannion
@@ -51,6 +52,7 @@ Then we moved on:
 * Corporate bookmarks,
 * Corporate chat & file exchange,
 * Active Directory sync,
+* Personal & team calendars,
 * Organisation chart,
 * IT asset inventory,
 * Analytics.
