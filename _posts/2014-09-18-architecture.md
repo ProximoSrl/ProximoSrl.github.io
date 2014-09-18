@@ -36,6 +36,31 @@ The [webapi](http://www.asp.net/web-api) services are hosted in IIS and secured 
 
 ## Data flow
 
+### Frontend api
+Jarvis data flow is "realtime async": our frontend api accepts and validate user commands, translate them in domain commands and push them to our commandbus for delivery.
+
+### Domain services
+The destination worker handle the command, with automatic retry and failover, invoking the corresponding aggregate methods, it's a sort of RPC over service bus: there is not a strict one to one mapping between commands and methods.
+
+The target aggregate emits events in response to method calls to change is state, the events are persisted in NEventStore waiting for consumers: [projections](http://cqrs.wikidot.com/doc:projection)
+and
+[process managers](http://msdn.microsoft.com/en-us/library/jj591569.aspx).
+
+### Process managers
+Every [process manager](http://msdn.microsoft.com/en-us/library/jj591569.aspx) place a subscription on Rebus for the events it is interested of.
+To be more accurate a process manager can subscribe for events and messages; a message doesn't have domain semantic and is exchanged with external high latency services.
+The process manager react to events sending new commands and messages.
+
+### High latency services
+We need to rely on external services for text extraction, document conversion and analisys; all the cpu intensive and high latency tasks are hosted by a service worker installed on one or more machines with a simple round robin routing for task distribution.
+
+### Projections
+Our [projections](http://cqrs.wikidot.com/doc:projection) service works in pull mode; projections are grouped by affinity; every group has a subscpription to a polling client on the evenstore and run in is own thread.
+Our querymodel is denormalized on [MongoDb](http://www.mongodb.org) and [Elasticsearch](http://www.elasticsearch.org).
+
+### Push notifications
+
+
 <figure>
   <a href="/images/jarvis-architecture.jpg">
     <img src="/images/jarvis-architecture.jpg" alt="Jarvis architecture">
