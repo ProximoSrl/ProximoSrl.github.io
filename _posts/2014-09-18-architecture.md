@@ -59,10 +59,24 @@ Our [projections](http://cqrs.wikidot.com/doc:projection) service works in pull 
 Our querymodel is denormalized on [MongoDb](http://www.mongodb.org) and [Elasticsearch](http://www.elasticsearch.org).
 
 ### Push notifications
-
+Query model updates are pushed to subscribers with [SignalR](http://signalr.net) and processed by AngularJs for interface updates.
 
 <figure>
   <a href="/images/jarvis-architecture.jpg">
     <img src="/images/jarvis-architecture.jpg" alt="Jarvis architecture">
   </a>
 </figure>
+
+## What's next
+This architecture worked well for our first customer, we have over 100 concurrent users, databases, frontend api and worker services on the same vmware box.
+Cpu is mostly between 1-2%, ram consumption flat and the whole roundript usually takes few milliseconds.
+
+Rebuilding all the 50+ projections from 350k+ commits takes almost 10 minutes (we are single thread), we need to improve in this area.
+
+Our querymodel is about 4gb, we expect to grow (at least) by a [100x factor](/about-this-blog/) in the next two months.
+
+We want to split our domains in isolated services and remove the friction for every deploy: we deploy twice a week, some weeks every day (or twice a day).
+
+To achieve this goal [Gian Maria](/about/gianmariaricci/) is working on a configurations dispatcher service and getting rid of all the connection strings and application settings palced in the web/app.config.
+
+More in the next post.
