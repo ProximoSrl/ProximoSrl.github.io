@@ -42,13 +42,13 @@ Jarvis data flow is "realtime async": our frontend api accepts and validate user
 ### Domain services
 The destination worker handle the command, with automatic retry and failover, invoking the corresponding aggregate methods, it's a sort of RPC over service bus: there is not a strict one to one mapping between commands and methods.
 
-The target aggregate emits events in response to method calls to change is state, the events are persisted in NEventStore waiting for consumers: [projections](http://cqrs.wikidot.com/doc:projection)
+The target aggregate emits events in response to method calls to change its state, the events are persisted in NEventStore waiting for consumers: [projections](http://cqrs.wikidot.com/doc:projection)
 and
 [process managers](http://msdn.microsoft.com/en-us/library/jj591569.aspx).
 
 ### Process managers
 Every [process manager](http://msdn.microsoft.com/en-us/library/jj591569.aspx) place a subscription on Rebus for the events it is interested in.
-To be more accurate a process manager can subscribe for events and messages; a message doesn't have domain semantic and is exchanged with external high latency services.
+To be more accurate a process manager can subscribe to events and messages; a message doesn't have domain semantic and is exchanged with external high latency services.
 The process manager react to events sending new commands and messages.
 
 ### High latency services
