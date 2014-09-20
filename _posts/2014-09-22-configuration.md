@@ -39,36 +39,37 @@ Solving complex problem with complex solution, #ACCEPTABLE.
 >
 Solving complex problem with simple solution, #GENIUS.
 
-In my first implementation, a json file with all the configuration is good enough, it centralize configuration and I can add some functionalities that helps handling configurations.
+In my first implementation, a json file with all the configuration is good enough, it centralize configuration and I can add some functionalities that helps handling configurations in a simple class that handles everything.
 
 ###Keep in mind DevOps 
 Releasing your sofware [must be easy and well documented procedure](http://devopsreactions.tumblr.com/post/57234308379/setting-up-a-product-following-vendors-instructions) and you should help as much as possible Operation people in understadingwhat is wrong.
 
-One of the pain we want to easy changing how configuration work is getting rid of this kind of pieces of code.
+One of the pain point we want to address with the new configuration manager is getting rid of this code.
 
 {% highlight csharp %}
 var sysUrl = new MongoUrl(ConfigurationManager.ConnectionStrings["system"].ConnectionString);
 var sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
 {% endhighlight %}
 	
-In this simple innocent two lines we have some bad problem that can bite you during deployment. If you remove a connection string from config file, or you forget to add a new connection string after a new deploy, you just run the service and it chrashes without any log and any useful information. One of the goal of a good configuration system is clearly telling to the user what configuration is wrong.
+In this simple innocent two lines we have some bad problem that can bite you during deployment. If you remove a connection string from config file, or you forget to add a new connection string after a new deploy, you just run the service and it chrashes without any log and any useful information. Even if you manage to log all unhandled exceptions, all you probably got is a MongoException or a NullReferenceException and no clue of what is wrong and where you can fix the error. One of the goal of good configuration system is the ability to tell what configuration is wrong and where you can fix it.
 
-If a connection string or other configuration is missing I want to know what is wrong, so this is configuration code version 2.
+Thanks to a new configuration manager, I can simply substitute standard ConfigurationManager with the new implementation, leading to code version 2.
 
 {% highlight csharp %}
 var sysUrl = new MongoUrl(CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system"));
 var sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
 {% endhighlight %}
 
-The only difference is in the new CwrsConfigurationManager class; now if required setting was not found I got this error logged with log4net (both udp and file): *Required setting connectionStrings.system not found in configuration: http://localhost/Jarvis/Debug/config.json*. Such an error immediately give me two indication: What is wrong and where I should fix the configuration.
+The only difference is in the new CwrsConfigurationManager class; now if required setting was not found I got this error logged (log4net both udp and file): *Required setting 'connectionStrings.system' not found in configuration: http://localhost/Jarvis/Debug/config.json*. Such an error immediately give me two indication: What is wrong and where I should add missing configuration.
 
 ###Fail as first as possible (and with good log)
 
-The previous situation is still not optimal, *what happens if the configuration is present in configuration manager but is wrong (es. wrong mongo connection string, bad configuration)*? The answer is: **it depends**. Usually the code will throw ***some*** exception ***somewhere*** and hopefully you got a log, but quite often the log is not useful.
+The previous situation is still not optimal, *what happens if the configuration is present but is wrong (es. wrong mongo connection string, bad configuration)*? The answer is: **it depends**. Usually the code will throw ***some*** exception ***somewhere*** and hopefully you got a log, but quite often the log is not telling you details on how to fix the problem. 
 
-A log telling you that you got a MongoDbException and the message is *Unable to connect to server fingolfin:27017: No such host is known.* and a nice stack trace is not so useful for Ops or for anyone trying to setup your software.
+A log telling you that you got a MongoDbException: *Unable to connect to server fingolfin:27017: No such host is known.* with a nice stack trace is of on use for operationals or for anyone trying to setup your software. Once I realize that the software is trying to connect to some invalid host, where should I fix it? Remember also that with connection string you usually got the address of the server in the exception, but if you are using a simple string configuration and the code issue a String.Split() you usually got a NullReferenceException, period!
 
-***I want my software to fail as soon as a wrong configuration setting is found, giving much information as possible to the user***
+The rule is:	***I want my software to fail as soon as a wrong configuration setting is found, giving much information as possible to the user***. This lead me to code version 3.
+
 {% highlight csharp %}
 MongoDatabase sysdb = null;
 CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system", setting =>
@@ -79,7 +80,34 @@ CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system", setting
 });
 {% endhighlight %}
 
-The semantic is simple, I can pass a simple lambda that uses the setting, and if no exception is thrown configuration is considered to be good. With the previous code, if the Mongo Server does not respond or if the settings is wrong I got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.* that contains enough details to immediately find and fix what is wrong.
+The semantic is simple, I can pass a simple lambda that immediately consumes the setting, and if no exception is thrown configuration is considered to be good. With the previous code, if the Mongo Server si down or if the settings is wrong I got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.* that contains enough details to immediately find and fix what is wrong.
+
+If the configuration is a simple string that should contains a series of comma separated integer number I can use this code.
+
+{% highlight csharp %}
+List<Int32> parsedConfig = new List<int>();
+CqrsConfigurationManager.Instance.GetSetting("coefficientList", setting =>
+{
+    var splitted = setting.Split(',');
+    Int32 tmp;
+    foreach (var number in splitted)
+    {
+        if (!Int32.TryParse(number, out tmp))
+        {
+            return "The value " + number +
+                    " is not a number. I'm expecting a list of integer number comma separated.";
+        }
+        parsedConfig.Add(tmp);
+    }
+    return "";
+});
+{% endhighlight %}
+
+It is just a matter of using the configuration, validating it and if something is wrong return a detailed error. If I specify a wrong string *13,24,3O9* in configuration file (there is an O letter instead of zero), I got this exception.
+
+***Error during usage of configuration 'coefficientList' - Config location: http://localhost/Jarvis/Debug/config.json - error: The value 3O9 is not a number. I'm expecting a list of integer number comma separated.***
+
+That immediately helps me locating where and what is wrong in my configuration.
 
 Next post will deal on: *Where do you specify location file?* 
 
