@@ -39,6 +39,8 @@ Solving complex problem with complex solution, #ACCEPTABLE.
 >
 Solving complex problem with simple solution, #GENIUS.
 
+In my first implementation, a json file with all the configuration is good enough, it centralize configuration and I can add some functionalities that helps handling configurations.
+
 ###Keep in mind DevOps 
 Releasing your sofware [must be easy and well documented procedure](http://devopsreactions.tumblr.com/post/57234308379/setting-up-a-product-following-vendors-instructions) and you should help as much as possible Operation people in understadingwhat is wrong.
 
@@ -62,6 +64,23 @@ The only difference is in the new CwrsConfigurationManager class; now if require
 
 ###Fail as first as possible (and with good log)
 
-The previous situation is still not optimal, what happens if the configuration is present in configuration manager but is wrong or something goes wrong (es. wrong mongo connection string)?
+The previous situation is still not optimal, *what happens if the configuration is present in configuration manager but is wrong (es. wrong mongo connection string, bad configuration)*? The answer is: **it depends**. Usually the code will throw ***some*** exception ***somewhere*** and hopefully you got a log, but quite often the log is not useful.
+
+A log telling you that you got a MongoDbException and the message is *Unable to connect to server fingolfin:27017: No such host is known.* and a nice stack trace is not so useful for Ops or for anyone trying to setup your software.
+
+***I want my software to fail as soon as a wrong configuration setting is found, giving much information as possible to the user***
+{% highlight csharp %}
+MongoDatabase sysdb = null;
+CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system", setting =>
+{
+    var sysUrl = new MongoUrl(setting);
+    sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
+    sysdb.GetStats();
+});
+{% endhighlight %}
+
+The semantic is simple, I can pass a simple lambda that uses the setting, and if no exception is thrown configuration is considered to be good. With the previous code, if the Mongo Server does not respond or if the settings is wrong I got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.* that contains enough details to immediately find and fix what is wrong.
+
+Next post will deal on: *Where do you specify location file?* 
 
 
