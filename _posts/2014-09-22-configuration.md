@@ -42,56 +42,26 @@ Solving complex problem with simple solution, #GENIUS.
 ###Keep in mind DevOps 
 Releasing your sofware [must be easy and well documented procedure](http://devopsreactions.tumblr.com/post/57234308379/setting-up-a-product-following-vendors-instructions) and you should help as much as possible Operation people in understadingwhat is wrong.
 
+One of the pain we want to easy changing how configuration work is getting rid of this kind of pieces of code.
 
-**That's (imho) how open source is supposed to work, less complains and more pull requests.**
+{% highlight csharp %}
+var sysUrl = new MongoUrl(ConfigurationManager.ConnectionStrings["system"].ConnectionString);
+var sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
+{% endhighlight %}
+	
+In this simple innocent two lines we have some bad problem that can bite you during deployment. If you remove a connection string from config file, or you forget to add a new connection string after a new deploy, you just run the service and it chrashes without any log and any useful information. One of the goal of a good configuration system is clearly telling to the user what configuration is wrong.
 
-Jarvis core domains are hosted in few ([Topshelf](https://github.com/Topshelf/Topshelf) based) windows services  talking each other with [Rebus](https://github.com/rebus-org/Rebus) and [MSMQ](http://msdn.microsoft.com/en-us/library/ms711472(v=vs.85).aspx).
+If a connection string or other configuration is missing I want to know what is wrong, so this is configuration code version 2.
 
-The [webapi](http://www.asp.net/web-api) services are hosted in IIS and secured with integrated authentication.
+{% highlight csharp %}
+var sysUrl = new MongoUrl(CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system"));
+var sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
+{% endhighlight %}
 
-## Data flow
+The only difference is in the new CwrsConfigurationManager class; now if required setting was not found I got this error logged with log4net (both udp and file): *Required setting connectionStrings.system not found in configuration: http://localhost/Jarvis/Debug/config.json*. Such an error immediately give me two indication: What is wrong and where I should fix the configuration.
 
-### Frontend api
-Jarvis data flow is "realtime async": our frontend api accepts and validate user commands, translate them in domain commands and push them to our commandbus for delivery.
+###Fail as first as possible (and with good log)
 
-### Domain services
-The destination worker handle the command, with automatic retry and failover, invoking the corresponding aggregate methods, it's a sort of RPC over service bus: there is not a strict one to one mapping between commands and methods.
+The previous situation is still not optimal, what happens if the configuration is present in configuration manager but is wrong or something goes wrong (es. wrong mongo connection string)?
 
-The target aggregate emits events in response to method calls to change its state, the events are persisted in NEventStore waiting for consumers: [projections](http://cqrs.wikidot.com/doc:projection)
-and
-[process managers](http://msdn.microsoft.com/en-us/library/jj591569.aspx).
 
-### Process managers
-Every [process manager](http://msdn.microsoft.com/en-us/library/jj591569.aspx) place a subscription on Rebus for the events it is interested in.
-To be more accurate a process manager can subscribe to events and messages; a message doesn't have domain semantic and is exchanged with external high latency services.
-The process manager react to events sending new commands and messages.
-
-### High latency services
-We need to rely on external services for text extraction, document conversion and analisys; all the cpu intensive and high latency tasks are hosted by a service worker installed on one or more machines with a simple round robin routing for task distribution.
-
-### Projections
-Our [projections](http://cqrs.wikidot.com/doc:projection) service works in pull mode; projections are grouped by affinity; every group has a subscpription to a polling client on the evenstore and run in its own thread.
-Our querymodel is denormalized on [MongoDb](http://www.mongodb.org) and [Elasticsearch](http://www.elasticsearch.org).
-
-### Push notifications
-Query model updates are pushed to subscribers with [SignalR](http://signalr.net) and processed by AngularJs for interface updates.
-
-<figure>
-  <a href="/images/jarvis-architecture.jpg">
-    <img src="/images/jarvis-architecture.jpg" alt="Jarvis architecture">
-  </a>
-</figure>
-
-## What's next
-This architecture worked well for our first customer, we have over 100 concurrent users, databases, frontend api and worker services on the same vmware box.
-Cpu is mostly between 1-2%, ram consumption flat and the whole roundript usually takes few milliseconds.
-
-Rebuilding all the 50+ projections from 350k+ commits takes almost 10 minutes (we are single thread), we need to improve in this area.
-
-Our querymodel is about 4gb, we expect to grow (at least) by a [100x factor](/about-this-blog/) in the next two months.
-
-We want to split our domains in isolated services and remove the friction for every deploy: we deploy twice a week, some weeks every day (or twice a day).
-
-To achieve this goal [Gian Maria](/about/gianmariaricci/) is working on a configurations dispatcher service and getting rid of all the connection strings and application settings palced in the web/app.config.
-
-More in the next post.
