@@ -64,11 +64,9 @@ The only difference is in the new CqrsConfigurationManager class; if the setting
 
 ###Fail as first as possible (and with good log)
 
-The  situation is still not optimal, *what happens if the configuration is present but is wrong (es. wrong mongo connection string)*? The answer is: **it depends**. Usually the code will throw ***some*** exception ***somewhere***, but all you got is a raw exception and still no clue of what is wrong. 
+The  situation is still not optimal, *what happens if the configuration is present but is wrong (es. wrong mongo connection string)*? The answer is: **it depends**. Usually the code will throw ***some*** exception ***somewhere*** and only ***when*** the configuration is really used. The ***when*** problem is one of the worst. Suppose your software needs the address of a special mongo instance where it should save commands that raised exception during execution. If that settings is wrong the service starts without any error in the logs, giving you false confidence that everything is good.
 
-If you got a MongoDbException: *Unable to connect to server fingolfin:27017: No such host is known.* it is better than nothing, but once I realize that the software is trying to connect to an invalid host, I still have no clue on what I should do to fix it? If the code is expecting a string setting, with a comma separated list of integers that will be consumed by a String.Split(), if the setting is wrong you only got a NullReferenceException or FormatException! 
-
-And what about settings rarely used in the software? Suppose your software needs the address of a queue where it should place commands that raised exception when executed. If that settings is wrong you will only got the exception when a command fails execution.  
+After a while log contains error with MongoDbException: *Unable to connect to server fingolfin:27017: No such host is known.* and absolutely no clue on how to fix it. 
 
 The rule is: ***I want my software to detect as soon as possible wrong configuration settings, and log every information needed to do the fix!***. This lead  to code version 3.
 
@@ -80,11 +78,11 @@ CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system", setting
     sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
     sysdb.GetStats();
 });
-{% endhighlight %}
+{% endhighlight %} 
 
-The semantic is simple, GetSetting accepts a lambda that should consume and validate the setting. If no exception is thrown or lambda returns empty string, configuration is considered to be good. If connection string is wrong I got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.*. This log contains enough details to understand **what** configuration is wrong and **where** you can find config file to fix it.
+The semantic is simple, GetSetting accepts a lambda that should **consume and validate the setting in a single step**. If no exception is thrown or lambda returns empty string, configuration is considered to be good. If connection string is wrong I immediately got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.*. This log contains enough details to understand **what** configuration is wrong **where** it can be fixed.
 
-If the setting is expected to be a simple comma separated list of integer we can use this code.
+This is especially good if the setting is complex, ex:a simple comma separated list of integers
 
 {% highlight csharp %}
 List<Int32> parsedConfig = new List<int>();
@@ -105,9 +103,10 @@ CqrsConfigurationManager.Instance.GetSetting("coefficientList", setting =>
 });
 {% endhighlight %}
 
-If I specify a wrong string *13,24,3O9* in configuration file (there is an O letter instead of zero in last number), I got this exception.
+If a wrong string *13,24,3O9* is found in configuration file (there is an O letter instead of zero in last number), the system will log this message: ***Error during usage of configuration 'coefficientList' - Config location: http://localhost/Jarvis/Debug/config.json - error: The value 3O9 is not a number. I'm expecting a comma separated list of integer.***. As a general rule you can adopt a little variant of one of the rule of [Code for the maintainer](http://c2.com/cgi/wiki?CodeForTheMaintainer) 
 
-***Error during usage of configuration 'coefficientList' - Config location: http://localhost/Jarvis/Debug/config.json - error: The value 3O9 is not a number. I'm expecting a comma separated list of integer.***
+>
+Always code as if the person who ends up installing your software is a violent psychopath who knows where you live! 
 
 Next post will deal on: *Where do you specify location of config file?* 
 
