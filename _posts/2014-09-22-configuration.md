@@ -13,22 +13,22 @@ share: true
 ---
 
 ## Why configurations are important
-When you start working with .NET technologies it is natural to place application settings inside app.config/web.config, but this approach usually fails to be useful in long term for many reasons
+When you start working with .NET technologies it seems natural to place application settings inside app.config/web.config files, but this approach usually fails to be useful in long term for various reasons:
 
-- When a software is composed by multiple services it is good to have a single configuration
-- Config file mixes application specific settings with .NET settings (es. assembly redirect, )
+- When a software is composed by multiple services it is good to have a single configuration point
+- Config file mixes application specific settings with .NET settings (es. assembly redirect and connection string )
 - Xml is not the best human readable format
 - Frictions for automatic deploy ([web.config transform](http://msdn.microsoft.com/en-us/library/vstudio/dd465318(v=vs.100).aspx), [SlowCheetah](http://visualstudiogallery.msdn.microsoft.com/69023d00-a4f9-4a34-a6cd-7e854ba318b5), etc)
 
 ###Resist the urge for complexity
-As a good rule of thumb, avoid creating an architecture capable of launching rocket into space if you only need a better configuration manager for a set of services. 
+As a good rule of thumb, architectures capable of launching rocket into space should be avoided, unless launching a rocket is the real need. If you only need a better configuration manager for a set of services simplicity should be the key. 
 
 > 
 Simplicity is the ultimate sophistication. [Leonardo da Vinci](http://www.brainyquote.com/quotes/quotes/l/leonardoda107812.html)
 >
 >Keep It Simple, Stupid. [Wikipedia](http://en.wikipedia.org/wiki/KISS_principle)
 
-One of my defects is loving software architecture and this usually lead to an unnecessary complexity. In latests period I'm trying to change attitude, the goal is doing the simplest thing that could possibly work. This is what I think:
+Since I love designing software architectures this usually produce unnecessary complexity, and I'm trying to change this attitude. The goal should be designing the simplest thing that could possibly work:
 
 > 
 Solving simple problem with complex solution, #FAIL.
@@ -39,19 +39,19 @@ Solving complex problem with complex solution, #GOOD.
 >
 Solving complex problem with simple solution, #GENIUS.
 
-Our need "now" is moving settings away from multiple config file and having a single "configuration manager"; json file with all the configuration is good enough. Then we need to address some pains in configuration, this leads to a simple Configuration Manager class that wraps access to json configuration file with some facilities.
+Jarvis need "now", is moving settings away from multiple config file and having a single "configuration manager"; a json file with all the configuration is good enough to start. There are also some little pain for configuration, leading to a simple Configuration Manager class to encapsulate access to json configuration file with some facilities.
 
 ###Keep in mind DevOps 
-Releasing your sofware [must be easy and well documented procedure](http://devopsreactions.tumblr.com/post/57234308379/setting-up-a-product-following-vendors-instructions) and you should help as much as possible Operational people in troubleshooting wrong configruations.
+Releasing sofware [must be an easy and well documented procedure](http://devopsreactions.tumblr.com/post/57234308379/setting-up-a-product-following-vendors-instructions) and Operational people should be facilitated in troubleshooting wrong configruations.
 
-One of the pain point we want to address with the new configuration manager is getting rid of this code.
+One of the pain point to address with the new configuration manager is getting rid of this code.
 
 {% highlight csharp %}
 var sysUrl = new MongoUrl(ConfigurationManager.ConnectionStrings["system"].ConnectionString);
 var sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
 {% endhighlight %}
 	
-This code can bite you badly. In case of missing connection string) when the service starts it chrashes without any useful log or clue of what is wrong. Logging raw exception can be good for developers, but fails to be useful for operational people. If you got a MongoException or a NullReferenceException with a stack trace you have absolutely no clue of **what is wrong** and **where you can fix the error**. One of the goal of good configuration manager is making simple to give useful information in case of wrong setting.
+This code can bite during deployment. Suppose a connection string is missing; when the service starts it chrashes without any useful log or clue of what is wrong. Logging raw exception can be good for developers, but fails to be useful for operational people. If you got a MongoException or a NullReferenceException with a stack trace you have absolutely no clue of **what is wrong** and **where you can fix the error**. One of the goal of good configuration manager is creating good log full of useful informationin case of wrong settings.
 
 Thanks to a new configuration manager, I can simply substitute standard ConfigurationManager with the new implementation, leading to code version 2.
 
@@ -60,13 +60,15 @@ var sysUrl = new MongoUrl(CqrsConfigurationManager.Instance.GetSetting("connecti
 var sysdb = new MongoClient(sysUrl).GetServer().GetDatabase(sysUrl.DatabaseName);
 {% endhighlight %}
 
-The only difference is in the new CqrsConfigurationManager class; if the setting is missing I got a meaningful log: *Required setting 'connectionStrings.system' not found in configuration: http://localhost/Jarvis/Debug/config.json*. This log gives two important information: **What** is wrong and **where** I should add missing configuration.
+The only difference is in the new CqrsConfigurationManager class; if the setting is missing I got a meaningful log: *Required setting 'connectionStrings.system' not found in configuration: http://localhost/Jarvis/Debug/config.json*. This log gives two important information: **What** is missing and **where** I should add the configuration.
 
 ###Fail as first as possible (and with good log)
 
-The  situation is still not optimal, *what happens if the configuration is present but is wrong (es. wrong mongo connection string)*? The answer is: **it depends**. Usually the code will throw ***some*** exception ***somewhere*** and only ***when*** the configuration is really used. The ***when*** problem is one of the worst. Suppose your software needs the address of a special mongo instance where it should save commands that raised exception during execution. If that settings is wrong the service starts without any error in the logs, giving you false confidence that everything is good.
+The  situation is still not optimal because it address only missing configuration but not bad ones. *What happens if the configuration is present but is wrong (es. wrong mongo connection string)*? The answer is: **it depends**. 
 
-After a while log contains error with MongoDbException: *Unable to connect to server fingolfin:27017: No such host is known.* and absolutely no clue on how to fix it. 
+Usually the code will throw ***some*** exception ***somewhere*** and only ***when*** the configuration is really used. The ***when*** problem is one of the worst. If your software needs the address of a special mongo instance where it should save commands that raised exception during execution, if that settings is wrong the service starts without any error in the logs, giving you false confidence that everything is good.
+
+After some time that the software runs you start having error logs like this one: MongoDbException: *Unable to connect to server fingolfin:27017: No such host is known* and absolutely no clue on how to fix it. 
 
 The rule is: ***I want my software to detect as soon as possible wrong configuration settings, and log every information needed to do the fix!***. This lead  to code version 3.
 
@@ -80,9 +82,9 @@ CqrsConfigurationManager.Instance.GetSetting("connectionStrings.system", setting
 });
 {% endhighlight %} 
 
-The semantic is simple, GetSetting accepts a lambda that should **consume and validate the setting in a single step**. If no exception is thrown or lambda returns empty string, configuration is considered to be good. If connection string is wrong I immediately got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.*. This log contains enough details to understand **what** configuration is wrong **where** it can be fixed.
+The semantic is simple; GetSetting accepts an optional lambda that should **consume and/or validate the setting in a single step**. If no exception is thrown or lambda returns empty string, configuration is considered to be good. If the connection string is wrong I immediately got an exception: *Error during usage of configuration 'connectionStrings.system' - Config location: http://localhost/Jarvis/Debug/config.json - error: Unable to connect to server fingolfin:27017: No such host is known.*. This log contains enough details to understand **what** configuration is wrong and **where** it should be fixed.
 
-This is especially good if the setting is complex, ex:a simple comma separated list of integers
+This is especially good if the setting is complex, ex:a comma separated list of integers
 
 {% highlight csharp %}
 List<Int32> parsedConfig = new List<int>();
@@ -103,11 +105,11 @@ CqrsConfigurationManager.Instance.GetSetting("coefficientList", setting =>
 });
 {% endhighlight %}
 
-If a wrong string *13,24,3O9* is found in configuration file (there is an O letter instead of zero in last number), the system will log this message: ***Error during usage of configuration 'coefficientList' - Config location: http://localhost/Jarvis/Debug/config.json - error: The value 3O9 is not a number. I'm expecting a comma separated list of integer.***. As a general rule you can adopt a little variant of one of the rule of [Code for the maintainer](http://c2.com/cgi/wiki?CodeForTheMaintainer) 
+If a wrong string *13,24,3O9* is found in configuration file (there is an O letter instead of zero in last number), the system will log this message: ***Error during usage of configuration 'coefficientList' - Config location: http://localhost/Jarvis/Debug/config.json - error: The value 3O9 is not a number. I'm expecting a comma separated list of integer.***. Whenever a setting is consumed by the application, it is useful to consider a little variant of the famous rule found in [Code for the maintainer](http://c2.com/cgi/wiki?CodeForTheMaintainer) 
 
 >
-Always code as if the person who ends up installing your software is a violent psychopath who knows where you live! 
+Always code as if the person who ends up *installing* your software is a violent psychopath who knows where you live! 
 
-Next post will deal on: *Where do you specify location of config file?* 
+Next post will deal on: *Where do you specify location of json config file used by CqrsConfigurationManager?* 
 
 
