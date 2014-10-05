@@ -36,14 +36,24 @@ Some time ago I had the pleasure to meet with some friends for our
 "Ubiquitous Language Smackdown" talk in which he shared his experience.
 We made a very similar experience ourself (same terms, same communication issues
 with our customer), but I was firmly convinced that this approach could be used
-only on projects and was not suitable for products.
+only on projects and was not suitable for products where domain experts are our
+clients (we craft business software for SME and Public Sector).
 
-Based on our experience (we make products for ISV and very few projects,
-mostly to kickoff new products) every client speaks it's own language;
-it can depends on the market, the geographical location (event within the same
-country), ...
+Based on our experience every client speaks it's own language;
+it can depends on the market, the geographical location (even within the same
+country) and company size.
 
--> domain expert -> domain is HIS domain not and Ubiquitous domain
+Among our products there's a [Manufacturing execution system](http://en.wikipedia.org/wiki/Manufacturing_execution_system);
+if we talk to a mechanical parts manufacturer we can refer to "Bill of Materials",
+but if we talk to a fashion manufacturer and we say "Bill of Materials" the games
+are over :"your product is not for us, we don't deal with BOM".
+Their bill of materials (IT: distinta base) is "Scheda tecnica"; I don't know
+how to translate with the correct meaning in english, maybe in english there's
+not this distinction. If we talk with an PCB assembly company, "Scheda tecnica"
+means "Product Sheet".
+
+With all these distinctions how can we model our software in an Ubiquitous way?
+
 
 ## No it's all about meanings
 
