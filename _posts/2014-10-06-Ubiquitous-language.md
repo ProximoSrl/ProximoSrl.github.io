@@ -47,15 +47,24 @@ Among our products there's a [Manufacturing execution system](http://en.wikipedi
 if we talk to a mechanical parts manufacturer we can refer to "Bill of Materials",
 but if we talk to a fashion manufacturer and we say "Bill of Materials" the games
 are over :"your product is not for us, we don't deal with BOM".
-Their bill of materials (IT: distinta base) is "Scheda tecnica"; I don't know
+Their bill of materials (IT: "distinta base") is "Scheda tecnica"; I don't know
 how to translate with the correct meaning in english, maybe in english there's
 not this distinction. If we talk with an PCB assembly company, "Scheda tecnica"
 means "Product Sheet".
 
-With all these distinctions how can we model our software in an Ubiquitous way?
+With all these distinctions how can we design our model in an Ubiquitous way?
 
+We gave up on UL until something happened...
 
 ## No it's all about meanings
+
+One year later I was asked to do a three days class on CQRS+ES, usually I drop
+these kind of requests because It's not my work, my goal is to delivery
+(working) software to our customers not to teach others to do the same
+(that's post-work community stuff).
+
+"Semantic... semantic... semantic".. I found myself talking *all the time* about
+domain semantic
 
 <blockquote>
 There's a sign on the wall but she wants to be sure<br/>  
@@ -63,3 +72,21 @@ Cause you know sometimes words have two meanings<br/>
 <br/>
 Stairway to Heaven - Led Zeppelin
 </blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
