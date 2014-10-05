@@ -54,7 +54,7 @@ means "Product Sheet".
 
 With all these distinctions how can we design our model in an Ubiquitous way?
 
-We gave up on UL until something happened...
+We gave up on UL until...
 
 ## No it's all about meanings
 
@@ -63,8 +63,9 @@ these kind of requests because It's not my work, my goal is to delivery
 (working) software to our customers not to teach others to do the same
 (that's post-work community stuff).
 
-"Semantic... semantic... semantic".. I found myself talking *all the time* about
-domain semantic
+This time I made an exception, and something happened: "Semantic... semantic...
+semantic..." I found myself talking *all the time* about domain semantics and
+how domain semantics can help us to shape our models.
 
 <blockquote>
 There's a sign on the wall but she wants to be sure<br/>  
