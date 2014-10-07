@@ -28,13 +28,13 @@ discovery. Then update your design to reflect the results.
 *[The Art of Agile Development](http://www.jamesshore.com/Agile-Book/ubiquitous_language.html)*
 
 
-## It's all about terms?
-Some time ago I had the pleasure to meet with some friends for our
+## Is it all about terms?
+Some time ago I had the pleasure to meet with some friends for a
 [GUISA meeting](http://www.eventbrite.it/e/guisa-meeting-1-tickets-2972429617).
 
 [Andrea Saltarello](https://twitter.com/andysal74) gave the
 "Ubiquitous Language Smackdown" talk in which he shared his experience.
-We made a very similar experience ourself (same terms, same communication issues
+We made a very similar experience ourselves (same terms, same communication issues
 with our customer), but I was firmly convinced that this approach could be used
 only on projects and was not suitable for products where domain experts are our
 clients (we craft business software for SME and Public Sector).
@@ -48,8 +48,8 @@ if we talk to a mechanical parts manufacturer we can refer to "Bill of Materials
 but if we talk to a fashion manufacturer and we say "Bill of Materials" the games
 are over: "your product is not for us, we don't deal with BOM".
 Their bill of materials (IT: "distinta base") is "Scheda tecnica"; I don't know
-how to translate with the correct meaning in english, maybe in english there's
-not this distinction. If we talk with an PCB assembly company, "Scheda tecnica"
+how to correctly translate it with the correct meaning in english, maybe there's
+not this distinction. If we talk with a PCB assembly company, "Scheda tecnica"
 means "Product Sheet".
 
 With all these terms referring to the **same piece of functionality** how can
@@ -57,12 +57,11 @@ we design and code our model in an Ubiquitous way?
 
 We gave up on UL until...
 
-## No it's all about meanings...
+## No, it's all about Meaning...
 
 One year later I was asked to do a three days class on CQRS+ES, usually I drop
 these kind of requests because it's not our business, our goal is to delivery
-(working) software to our customers; teaching others to do the same is after
-work community stuff.
+(working) software to our customers; teaching others to do the same is community stuff.
 
 This time I made an exception, and something happened: "Semantic... semantic...
 semantic..." I found myself talking *all the time* about domain semantics and
@@ -88,19 +87,19 @@ Ubiquitous Language exploration has become the cornerstone of our
 [Evenstorming](http://ziobrando.blogspot.it/2013/11/introducing-event-storming.html)
 process (..more on [slideshare](http://www.slideshare.net/andreabalducci/alam-aeki-guida-illustrata-alla-modellazione-di-un-dominio-con-event-sourcing-event-storming)).
 
-## ...and Behavior.
-As expected when we found that the same term is used by the people in the
+## ...and Behaviour.
+As expected, when we found that the same term is used by the people in the
 organization with different meanings we have probably saved many hours of work;
 I ask the users to write down on a wide blank post-it the meaning of every single
 term as soon as it materialize in any command / event / readmodel post-it.
 
-The discussion start and lead us very quickly to domain discovery down at
+The discussion starts and leads us very quickly to domain discovery down at
 the rainbow's end!
 
 Yes, that's the fastest way to get to the "Pot of Gold":
 **term => meaning => use cases => behavior**.
 
 Stay tuned for the next post, I'll tell you how Ubiquitous Language helped us
-to discover behavior and model the "Document" aggregate in our DMS.
+to discover behaviour and model the "Document" aggregate in our DMS.
 
 *(spoiler: it's not a single Aggregate root)*
