@@ -56,10 +56,10 @@ With all these distinctions how can we design our model in an Ubiquitous way?
 
 We gave up on UL until...
 
-## No it's all about meanings
+## No it's all about meanings...
 
 One year later I was asked to do a three days class on CQRS+ES, usually I drop
-these kind of requests because It's not my work, my goal is to delivery
+these kind of requests because it's not my work, my goal is to delivery
 (working) software to our customers not to teach others to do the same
 (that's post-work community stuff).
 
@@ -74,20 +74,25 @@ Cause you know sometimes words have two meanings<br/>
 Stairway to Heaven - Led Zeppelin
 </blockquote>
 
+We can't use Ubiquitous Language with different customers and in our code base
+but we can use it on a smaller scope: a single organization.
+Within a single organization Ubiquitous Language is an invaluable tool;
+Ubiquitous Language exploration has become the cornerstone of our
+[Evenstorming](http://ziobrando.blogspot.it/2013/11/introducing-event-storming.html)
+process (..more on [slideshare](http://www.slideshare.net/andreabalducci/alam-aeki-guida-illustrata-alla-modellazione-di-un-dominio-con-event-sourcing-event-storming)).
 
+## ...and Behavior.
+As expected when we found that the same term is used by the people in the
+organization with different meanings we have probably saved many hours of work;
+I let the users write down on a wide blank post-it the meaning of every single
+term as soon as it materialize in any command / event post-it.
 
+Then the discussion start and very quickly lead us to invaluable informations
+not only about meaning for the different user roles (spotting bounded contexts)
+and down at the rainbow's end!
 
+Yes, that's the fastest way to get to the "Pot of Gold":
+term => meaning => use cases => behavior
 
-
-
-
-
-
-
-
-
-
-
-
-
-.
+Stay tuned for the next post, I'll tell you how Ubiquitous Language helped us
+to discover behavior and model the "Document" aggregate in our DMS.
