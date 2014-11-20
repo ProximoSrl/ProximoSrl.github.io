@@ -28,4 +28,5 @@ We identified two type of users:
 **Consumers**: every employee, both in headquarters and branch offices, has some interest in the documents produced by some departments, mainly based of his current employ.
 
 ## Document == File
-A document is an Open Office / Ms Office / Pdf file, was too easy to link the "Document" to a File concept.
+A document is an Open Office / Ms Office / Pdf file, so we implicitly began to treat the documents as files and model a File instead of a Document.
+Our "Document" was *Created*, *Deleted*, *Favorited*, *Tagged*, *Published*, *Opened*, *Analyzed*, *Protocolled*, *Versioned*, etc...
