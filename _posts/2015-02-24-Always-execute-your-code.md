@@ -22,20 +22,20 @@ Suppose we have this code that represents an Id based on a simple string.
 
 {% highlight csharp %}
 
-	public class StringId
-	{
-	    public String Value { get; set; }
-	
-	    public static implicit operator String(StringId id)
-	    {
-	        return id.Value;
-	    }
-	
-	    public override bool Equals(object obj)
-	    {
-	       //....
-	    }
-	}
+public class StringId
+{
+    public String Value { get; set; }
+
+    public static implicit operator String(StringId id)
+    {
+        return id.Value;
+    }
+
+    public override bool Equals(object obj)
+    {
+       //....
+    }
+}
 
 {% endhighlight %}
 
@@ -43,26 +43,26 @@ And we have also a Customer class based on this type of Id
 
 {% highlight csharp %}
 
-    public class CustomerId : StringId
+public class CustomerId : StringId
+{
+    public CustomerId(String rawValue)
     {
-        public CustomerId(String rawValue)
-        {
-            this.Value = rawValue;
-        }
+        this.Value = rawValue;
     }
+}
 
-    public class Customer
-    {
-        public CustomerId Id { get; set; }
+public class Customer
+{
+    public CustomerId Id { get; set; }
 
-        public String Name { get; set; }
+    public String Name { get; set; }
 
-        public String Surname { get; set; }
+    public String Surname { get; set; }
 
-        public Int32 Age { get; set; }
+    public Int32 Age { get; set; }
 
-        public Double TotalOrderAmount { get; set; }
-    }
+    public Double TotalOrderAmount { get; set; }
+}
 
 {% endhighlight %}
 
@@ -70,23 +70,23 @@ Finally we have some services that handle accessing data in Sql Database with NH
 
 {% highlight csharp %}
 
-    public class CustomerService
+public class CustomerService
+{
+
+    public Dictionary<CustomerId, Customer> _inMemoryRepo = new Dictionary<CustomerId, Customer>();
+
+    public void AddCustomer(Customer customer)
     {
-
-        public Dictionary<CustomerId, Customer> _inMemoryRepo = new Dictionary<CustomerId, Customer>();
-
-        public void AddCustomer(Customer customer)
-        {
-            _inMemoryRepo[customer.Id] = customer;      
-        }
-
-        public IEnumerable<Customer> GetAllCustomers()
-        {
-            return _inMemoryRepo.Values
-               .OrderBy(c => c.TotalOrderAmount)
-               .ThenBy(c => c.Id);
-        }
+        _inMemoryRepo[customer.Id] = customer;      
     }
+
+    public IEnumerable<Customer> GetAllCustomers()
+    {
+        return _inMemoryRepo.Values
+           .OrderBy(c => c.TotalOrderAmount)
+           .ThenBy(c => c.Id);
+    }
+}
 
 {% endhighlight %}
 
@@ -120,19 +120,19 @@ The real problem shows up only with certain test data. This new test can highlig
 
 {% highlight csharp %}
 
-        [TestMethod]
-        public void verify_get_all_customers_with_same_amount()
-        {
-            CustomerService sut = new CustomerService();
-            sut.AddCustomer(new Customer() { Id = new CustomerId("c1"), TotalOrderAmount = 16.0d });
-            sut.AddCustomer(new Customer() { Id = new CustomerId("c2"), TotalOrderAmount = 10.0d });
-            sut.AddCustomer(new Customer() { Id = new CustomerId("c3"), TotalOrderAmount = 16.0d });
+[TestMethod]
+public void verify_get_all_customers_with_same_amount()
+{
+    CustomerService sut = new CustomerService();
+    sut.AddCustomer(new Customer() { Id = new CustomerId("c1"), TotalOrderAmount = 16.0d });
+    sut.AddCustomer(new Customer() { Id = new CustomerId("c2"), TotalOrderAmount = 10.0d });
+    sut.AddCustomer(new Customer() { Id = new CustomerId("c3"), TotalOrderAmount = 16.0d });
 
-            var result = sut.GetAllCustomers();
-            result.Select(c => c.Id.Value)
-                .Should()
-                .Have.SameSequenceAs(new[] { "c2", "c1", "c3" });
-        }
+    var result = sut.GetAllCustomers();
+    result.Select(c => c.Id.Value)
+        .Should()
+        .Have.SameSequenceAs(new[] { "c2", "c1", "c3" });
+}
 
 {% endhighlight %}
 
