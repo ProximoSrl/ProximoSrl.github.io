@@ -96,19 +96,19 @@ Let's try to write a simple unit test that exercise the code.
 
 {% highlight csharp %}
 
-        [TestMethod]
-        public void verify_get_all_customers()
-        {
-            CustomerService sut = new CustomerService();
-            sut.AddCustomer(new Customer() { Id = new CustomerId("c1"), TotalOrderAmount = 10.0d });
-            sut.AddCustomer(new Customer() { Id = new CustomerId("c2"), TotalOrderAmount = 5.0d });
-            sut.AddCustomer(new Customer() { Id = new CustomerId("c3"), TotalOrderAmount = 16.0d });
+[TestMethod]
+public void verify_get_all_customers()
+{
+    CustomerService sut = new CustomerService();
+    sut.AddCustomer(new Customer() { Id = new CustomerId("c1"), TotalOrderAmount = 10.0d });
+    sut.AddCustomer(new Customer() { Id = new CustomerId("c2"), TotalOrderAmount = 5.0d });
+    sut.AddCustomer(new Customer() { Id = new CustomerId("c3"), TotalOrderAmount = 16.0d });
 
-            var result = sut.GetAllCustomers();
-            result.Select(c => c.Id.Value)
-                .Should()
-                .Have.SameSequenceAs(new [] { "c2", "c1", "c3" });
-        }
+    var result = sut.GetAllCustomers();
+    result.Select(c => c.Id.Value)
+        .Should()
+        .Have.SameSequenceAs(new [] { "c2", "c1", "c3" });
+}
 
 {% endhighlight %}
 
