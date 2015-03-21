@@ -66,7 +66,7 @@ If you believe that the real culprit is VS Test Runner, consider what happened i
 
 1. You run all test, test is red
 2. You run the test alone, test is green (because the test that changes CurrentPrincipal is not run)
-3. You run all test again, test is red :|
+3. You run all test again, test is red (ouch)
 4. You change the name of some test and the test returns green (maybe because the test that changes CurrentPrincipal is run after the erratic test
 
 This is called [erratic test](http://xunitpatterns.com/Erratic%20Test.html), because it is a **test that can fail due to other external conditions**. Such kind of tests bring real pain when they fails, because you need to understand if the test fails because the underling assumption is wrong (you have a bug) or if it's an external situation that makes it fail (the bug is in the test). In the long run this kind of test should be either fixed or removed from your suite of test.
