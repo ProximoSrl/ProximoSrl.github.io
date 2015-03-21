@@ -10,6 +10,7 @@ image:
   creditlink: http://www.morguefile.com/
 comments: true
 share: true
+---
 
 ## The mytical perfect Unit Test Fixture
 
