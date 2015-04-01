@@ -1,4 +1,4 @@
- cena---
+tat cena---
 layout: post
 title: Cost of logging in your architecture
 description: "Have you ever measured how much log code impact on your application performance? If you are using log4net you could learn something interesting profiling the code."
@@ -51,17 +51,35 @@ You can notice that with only mongo appender the whole rebuild is really faster.
 Actually I never liked too much console appender in log4net for various reason.
 
 - It slows down your application
-- It is difficult to read logs, console app have a limited buffer space and logs disappears so quick.
+- It is difficult to read logs, console app have a limited buffer space and logs disappears quickly.
+- Log disappear when the program is closed
+- You have no way to query log, you only have a huge sequence of text
 - If the program crashes usually you see a red log with the exception and the console app immediately closes befoure you can read what happened.
 
-If you want to use log to have a real-time progressing of what the application is doing, using a different apender, like UdpAppender or MongoAppender is a better strategy. 
+All these consideration lead to an obvious conclusion: Console Appender is not useful, the only purpose is showing you that the program **is doing something and it is not hung somewhere**
 
-## Using MongoDbAppender with writer on a dedicated thread and LooseFis
+	If you want to use logging infrastructure to have an idea of **progress** of your application, please convince yourself that this is not a good idea. Using logs to verify that the application is *doing something* has little utility.
 
-You can read details on this subject on my english blog: [BufferingAppenderSkeleton performance problem](http://www.codewrecks.com/blog/index.php/2015/03/27/bufferingappenderskeleton-performance-problem-in-log4net/) in log4net. Actually I've done a final run using LooseFix and asking mongo appender to use a dedicated thread to save logs and here is the result.
+After disabling ColoredConsoleAppender it is time to a final run.
+
+## Using MongoDbAppender with writer on a dedicated thread and LooseFix
+
+**We can further improve performance if you know how log4net works internally.** Our MongoDbAppender inherits from BufferingAppenderSkeleton and you can read on my english blog why it slows down performances: [BufferingAppenderSkeleton performance problem](http://www.codewrecks.com/blog/index.php/2015/03/27/bufferingappenderskeleton-performance-problem-in-log4net/).
+
+Armed with this knowledge I've done a final run using LooseFix and asking mongo appender to use a dedicated thread to save logs and here is the result.
 
 ![Fourth Run - mongodbappender with LooseFix and dedicated thread](/images/posts/logperformance/fourth.jpg)
 
-Even if the image is small, you can verify that this image is quite similar to the first one. To verify how much performance we are loosing, we need to measure with the code because with a quick look we cannot tell if using mongodbappender really slows down the application.
+Even if the image is small, you can verify that this image is quite similar to the first one. To verify how much performance we are loosing, we now need to measure exactly because we cannot tell anymore from a quick look to the image. MongoDbAppender have several advantages over ColoredConsoleAppender
+
+- It is durable; logs are maintained after the application is closed
+- You can query to find logs with lots of conditions (even regular expression)
+- If you constantly read latest 10 logs and total count from mongo you can have an **idea of *progress*** (this is not a perfect solution, but at least you can use for this purpose if you want).
+
+## What we learned
+
+This example give us some guidelines on how to handle log in production:
+
+	Logging is useful and the more information you logs, the easier is to find problems. The golden rule is: measure performance penalties in production, use only a single appender that persists logs in a durable medium that allow searching and you are done.
 
 Gian Maria.
