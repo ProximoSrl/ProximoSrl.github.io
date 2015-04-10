@@ -1,7 +1,7 @@
 tat cena---
 layout: post
 title: Cost of logging in your architecture
-description: "Have you ever measured how much log code impact on your application performance? If you are using log4net you could learn something interesting profiling the code."
+description: "Have you ever measured impact of logging code on your application performances? If you are using log4net you could learn something interesting profiling the code."
 tags: [testing, csharp]
 author: gianmariaricci
 image:
@@ -14,21 +14,21 @@ share: true
 
 ## Rebuilding everyting in a Event Source Based application
 
-Rebuilding all read-models (projections) in an Event Source Based application can be slow because we are processing hundreds of thousands of events with several projections. This is one area where having a boost in performance is crucial and it is where I want to understand **how much our logging infrastructure impact on performance**.
+Rebuilding all read-models (projections) in an Event Source Based application can be slow, because we are processing hundreds of thousands of events with several projections. This is one area where having a boost in performance is crucial and it is where I want to understand **how much our logging infrastructure impact on performance**.
 
-For this scenario I have a small batch of events (~4k) and log4net logging level set at DEBUG level; this will generates ~35k log messages in the system in this reference situation.
+For this scenario I have a small batch of events (~4k) and log4net logging level set at DEBUG level; this will generates ~35k log messages in this reference scenario.
 
-Projections are grouped by slots, each slot contains a certain number of projection, and each slots process events with its own thread (the exact architecture will be subject of future post)
+Projections are grouped by slots, each slot contains a certain number of projections, and each slots processes events in a separate thread (the exact architecture will be subject of future post)
 
 ## First run
 
-Here is what happened with the first run. 
+Here is what happened during the first run. 
 
 ![First Run - no log enabled](/images/posts/logperformance/first.jpg)
 
-This is a low resolution image, but it represents how much time I need to rebuild all projections with no log enabled. *The Y-Axis represents how many events are to be dispatched for each projection-slot, X-Axis represents time.*
+This is a low resolution image, but it represents how much time the system needs to rebuild all projections with no log enabled. *The Y-Axis represents how many events remain to dispatch for each projection-slot, X-Axis represents time.*
 
-This is the reference scenario, now I enabled logging at DEBUG level, both for our MongoBufferedAppender and for ColoredConsoleAppender. Even if the image is a low resolution one and we have no legend on X-Axis, you could be surprised that this is enough to verify that *logging is really killing performances*.
+This is the reference scenario, now logging is enabled at DEBUG level, both for our MongoBufferedAppender and for ColoredConsoleAppender. 
 
 ## What happens with all logs enabled
 
@@ -36,24 +36,26 @@ The situation really changed a lot:
 
 ![Second Run - ALL logs enabled](/images/posts/logperformance/second.jpg)
 
-Even if you have no X-Axis legend, it is really evident that the whole process is slowed down a lot having log enabled. We do not need exact measurement, the situation is so different that it is really evident from a quick look to a low resolution image. **Enabling logging is slowing down everything**.
+Even if you have no X-Axis legend, it is really evident that the whole process is slowed down a lot having log enabled. 
+
+	We do not need exact measurement, even if the image is a low resolution one and we have no legend on X-Axis it is evident that: **Enabling logging is slowing down everything**.
 
 We have also a really strange behaviour: most of the projections consumes events lineraly, three slots are really slower (this is normal), but when the other slots finished rebuild, the three slow slots speed up considerably. This means that Logging infrastructure is somewhat bounding toghether performances of different slots. 
 
-**Believe it or not, the reason is, ColoredConsoleAppender**. We have multiple services running in Console applications with [TopShelf](https://github.com/Topshelf/Topshelf); they can run as a service in production environment, but we use console appender to have a visual clue of what is happening development/debug, when services are run as standard console applications.
+**Believe it or not, the reason is, ColoredConsoleAppender**. We have multiple services running in Console applications with [TopShelf](https://github.com/Topshelf/Topshelf); they can run as a service in production environment, but we use console appender to have a visual clue of what is happening during development/debug, when services are run as standard console applications.
 
 ## Stopping ColoredConsoleAppender
 
-The next run is done simply setting threshold level of ColoredConsoleAppender to INFO instead of DEBUG. this reduce number of logs to ~500 logs and it is like disabling it completely. Here is the result.
+The next run is done simply setting threshold level of ColoredConsoleAppender to INFO instead of DEBUG. this reduce number of logs to ~500 for the entire run. Here is the result.
 
 ![Third Run - only mongodbappender](/images/posts/logperformance/third.jpg)
 
-The whole rebuild is really faster, it is still slower that having no log enabled but we have a real better scenario. Again, you do not need exact measurement, the impact of disabling ColoredConsoleAppender is so great that it is evident that Logging to console has a huge impact on performances. 
+The whole rebuild is really faster. It is still slower that having no log enabled but we have a real better scenario. Again, you do not need exact measurement, the impact of disabling ColoredConsoleAppender is so great that it is evident that Logging to console has a huge impact on performances. 
 
 Actually I never liked too much console appender in log4net for various reason.
 
 - It slows down your application
-- It is difficult to read logs, console app have a limited buffer space and logs disappears quickly.
+- It is difficult to read logs, console app have a limited buffer space and logs disappear quickly.
 - Log disappear when the program is closed
 - You have no way to query log, you only have a huge sequence of text scrolling on a console app
 - If the program crashes usually you see a red log with the exception and the console app immediately closes befoure you can read what happened.
@@ -72,7 +74,7 @@ Armed with this knowledge I've done a final run using LooseFix and asking mongo 
 
 ![Fourth Run - mongodbappender with LooseFix and dedicated thread](/images/posts/logperformance/fourth.jpg)
 
-Even if the image is small, you can verify that this image is quite similar to the first one. To verify how much performance we are loosing, we now need to measure exactly because we cannot tell anymore from a quick look to the image. This is the desired situation, logging infrastructure cannot be completely transparent, but if the loss in performance is negligible, the advantage of logging lots of information is invaluable. 
+Even if the image is small, you can verify that this image is quite similar to the first one. This is the desired situation, logging infrastructure cannot be completely transparent in performances, but if the loss in performance is negligible, the advantage of logging lots of information is invaluable. 
 
 MongoDbAppender have several advantages over ColoredConsoleAppender
 
