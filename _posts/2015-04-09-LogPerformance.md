@@ -1,4 +1,4 @@
-tat cena---
+---
 layout: post
 title: Cost of logging in your architecture
 description: "Have you ever measured impact of logging code on your application performances? If you are using log4net you could learn something interesting profiling the code."
