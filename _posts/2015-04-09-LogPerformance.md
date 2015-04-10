@@ -12,11 +12,11 @@ comments: true
 share: true
 ---
 
-## Rebuilding everyting in a Event Source Based application
+## Rebuilding QueryModels from an EventStore
 
-Rebuilding all read-models (projections) in an Event Source Based application can be slow, because we are processing hundreds of thousands of events with several projections. This is one area where having a boost in performance is crucial and it is where I want to understand **how much our logging infrastructure impact on performance**.
+Rebuilding all read-models (projections) from an EventStore can be slow, because we are processing hundreds of thousands of events with several projections. This is one area where having a boost in performance is crucial and it is where I want to understand **how much our logging infrastructure impact on performance**.
 
-For this scenario I have a small batch of events (~4k) and log4net logging level set at DEBUG level; this will generates ~35k log messages in this reference scenario.
+For this scenario I have a small batch of events (~4k) and evlog4net logging level set at DEBUG level; this will generates ~35k log messages in this reference scenario.
 
 Projections are grouped by slots, each slot contains a certain number of projections, and each slots processes events in a separate thread (the exact architecture will be subject of future post)
 
@@ -26,7 +26,7 @@ Here is what happened during the first run.
 
 ![First Run - no log enabled](/images/posts/logperformance/first.jpg)
 
-This is a low resolution image, but it represents how much time the system needs to rebuild all projections with no log enabled. *The Y-Axis represents how many events remain to dispatch for each projection-slot, X-Axis represents time.*
+This is a low resolution image, but it represents how much time the system needs to rebuild all projections with no log enabled. *The Y-Axis represents how many events remain to dispatch for each slot (each graph is one slot), X-Axis represents time.*. 
 
 This is the reference scenario, now logging is enabled at DEBUG level, both for our MongoBufferedAppender and for ColoredConsoleAppender. 
 
