@@ -38,8 +38,9 @@ The situation really changed a lot:
 
 Even if you have no X-Axis legend, it is really evident that the whole process is slowed down a lot having log enabled. 
 
-	We do not need exact measurement, even if the image is a low resolution one and we have no legend on X-Axis it is evident that: **Enabling logging is slowing down everything**.
-
+```
+We do not need exact measurement, even if the image is a low resolution one and we have no legend on X-Axis it is evident that: **Enabling logging is slowing down everything**.
+```
 We have also a really strange behaviour: most of the projections consumes events lineraly, three slots are really slower (this is normal), but when the other slots finished rebuild, the three slow slots speed up considerably. This means that Logging infrastructure is somewhat bounding toghether performances of different slots. 
 
 **Believe it or not, the reason is, ColoredConsoleAppender**. We have multiple services running in Console applications with [TopShelf](https://github.com/Topshelf/Topshelf); they can run as a service in production environment, but we use console appender to have a visual clue of what is happening during development/debug, when services are run as standard console applications.
@@ -62,8 +63,9 @@ Actually I never liked too much console appender in log4net for various reason.
 
 All these consideration lead to an obvious conclusion: Console Appender is not useful, the only purpose is showing you that the program **is doing something and it is not blocked somewhere**. 
 
-	If you want to use logging infrastructure to have an idea of **progress** of your application, please convince yourself that this is not a good idea. Using logs to verify that the application is *doing something* has little utility and it is not the reason logs are built for.
-
+```
+If you want to use logging infrastructure to have an idea of **progress** of your application, please convince yourself that this is not a good idea. Using logs to verify that the application is *doing something* has little utility and it is not the reason logs are built for.
+```
 Now it is time to the final run. 
 
 ## Using MongoDbAppender with writer on a dedicated thread and LooseFix
@@ -87,6 +89,8 @@ MongoDbAppender have several advantages over ColoredConsoleAppender
 
 This example give us some guidelines on how to handle log in production:
 
-	Logging is useful and the more information you log, the easier is to find a problem. The golden rule is: measure performance penalties in production, **use only a single appender** to persists logs in a **durable** medium that **allow searching** and you are ready to go.
+```
+Logging is useful and the more information you log, the easier is to find a problem. The golden rule is: measure performance penalties in production, **use only a single appender** to persists logs in a **durable** medium that **allow searching** and you are ready to go.
+```
 
 Gian Maria.
